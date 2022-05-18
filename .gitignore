@@ -68,3 +68,6 @@ local.properties
 .texlipse
 
 /src/test/
+/images/
+/project.txt
+/src/main/resources/static/images/1.bmp
