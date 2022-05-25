@@ -36,4 +36,20 @@ public class ProductController {
     public void setImageSaverService(ImageSaverService imageSaverService) {
         this.imageSaverService = imageSaverService;
     }
+
+    @GetMapping("/add")
+    public String showProductForm(Model model) {
+        Product product = new Product();
+        product.setId(0L);
+        model.addAttribute("product", product);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "product-form";
+    }
+
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute(value="product") Product product) {
+        product.setId(0L);
+        productService.saveProduct(product);
+        return "redirect:/shop";
+    }
 }
