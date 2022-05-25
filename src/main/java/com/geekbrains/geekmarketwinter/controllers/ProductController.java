@@ -3,6 +3,7 @@ package com.geekbrains.geekmarketwinter.controllers;
 import com.geekbrains.geekmarketwinter.entites.Product;
 import com.geekbrains.geekmarketwinter.entites.ProductImage;
 import com.geekbrains.geekmarketwinter.services.CategoryService;
+import com.geekbrains.geekmarketwinter.services.ProductImageService;
 import com.geekbrains.geekmarketwinter.services.ProductService;
 import com.geekbrains.geekmarketwinter.services.ImageSaverService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;
     private ImageSaverService imageSaverService;
+    private ProductImageService productImageService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -37,6 +39,11 @@ public class ProductController {
         this.imageSaverService = imageSaverService;
     }
 
+    @Autowired
+    public void setProductImageService(ProductImageService productImageService) {
+        this.productImageService = productImageService;
+    }
+
     @GetMapping("/add")
     public String showProductForm(Model model) {
         Product product = new Product();
@@ -47,9 +54,16 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute(value="product") Product product) {
-        product.setId(0L);
+    public String addProduct(@ModelAttribute(value="product") Product product, @RequestParam("file") MultipartFile file) {
         productService.saveProduct(product);
+        if (!file.isEmpty()) {
+            String path = imageSaverService.saveFile(file);
+            ProductImage productImage = new ProductImage();
+            productImage.setPath(path);
+            productImage.setProduct(product);
+            product.addImage(productImage);
+            productImageService.saveProductImagePath(productImage);
+        }
         return "redirect:/shop";
     }
 }
