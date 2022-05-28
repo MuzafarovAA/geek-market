@@ -3,9 +3,8 @@ package com.geekbrains.geekmarketwinter.controllers;
 import com.geekbrains.geekmarketwinter.entites.Product;
 import com.geekbrains.geekmarketwinter.entites.ProductImage;
 import com.geekbrains.geekmarketwinter.services.CategoryService;
-import com.geekbrains.geekmarketwinter.services.ProductImageService;
-import com.geekbrains.geekmarketwinter.services.ProductService;
 import com.geekbrains.geekmarketwinter.services.ImageSaverService;
+import com.geekbrains.geekmarketwinter.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;
     private ImageSaverService imageSaverService;
-    private ProductImageService productImageService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -39,31 +37,39 @@ public class ProductController {
         this.imageSaverService = imageSaverService;
     }
 
-    @Autowired
-    public void setProductImageService(ProductImageService productImageService) {
-        this.productImageService = productImageService;
-    }
-
-    @GetMapping("/add")
-    public String showProductForm(Model model) {
-        Product product = new Product();
-        product.setId(0L);
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable(name = "id") Long id) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            product = new Product();
+            product.setId(0L);
+        }
         model.addAttribute("product", product);
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "product-form";
+        return "/edit-product";
     }
 
-    @PostMapping("/add")
-    public String addProduct(@ModelAttribute(value="product") Product product, @RequestParam("file") MultipartFile file) {
+    @PostMapping("/edit")
+    public String processProductAddForm(@Valid @ModelAttribute("product") Product product, BindingResult theBindingResult, Model model, @RequestParam("file") MultipartFile file) {
+        if (product.getId() == 0 && productService.isProductWithTitleExists(product.getTitle())) {
+            theBindingResult.addError(new ObjectError("product.title", "Товар с таким названием уже существует")); // todo не отображает сообщение
+        }
+
+        if (theBindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "edit-product";
+        }
+
         productService.saveProduct(product);
+
         if (!file.isEmpty()) {
-            String path = imageSaverService.saveFile(file);
+            String pathToSavedImage = imageSaverService.saveFile(file);
             ProductImage productImage = new ProductImage();
-            productImage.setPath(path);
+            productImage.setPath(pathToSavedImage);
             productImage.setProduct(product);
             product.addImage(productImage);
-            productImageService.saveProductImagePath(productImage);
         }
+
         return "redirect:/shop";
     }
 }

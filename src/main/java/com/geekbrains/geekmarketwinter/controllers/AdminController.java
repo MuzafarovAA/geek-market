@@ -28,6 +28,13 @@ public class AdminController {
         return "admin-panel";
     }
 
+    @GetMapping("/orders")
+    public String showOrders(Model model) {
+        List<Order> orders = orderService.getAllOrders();
+        model.addAttribute("orders", orders);
+        return "orders-page";
+    }
+
     @GetMapping("/orders/ready/{id}")
     public void orderReady(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long id) throws Exception {
         Order order = orderService.findById(id);

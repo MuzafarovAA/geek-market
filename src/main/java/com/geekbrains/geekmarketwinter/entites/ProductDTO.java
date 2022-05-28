@@ -1,11 +1,8 @@
 package com.geekbrains.geekmarketwinter.entites;
 
 public class ProductDTO {
-
     private int id;
-
     private String title;
-
 
     public int getId() {
         return id;
