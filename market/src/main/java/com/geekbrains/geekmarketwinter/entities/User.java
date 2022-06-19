@@ -1,6 +1,8 @@
 package com.geekbrains.geekmarketwinter.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -31,7 +33,11 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @Column(name = "phone")
+    private String phone;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -46,20 +52,22 @@ public class User {
         COLUMN_MAPPINGS.put("first_name", "firstName");
         COLUMN_MAPPINGS.put("last_name", "lastName");
         COLUMN_MAPPINGS.put("email", "email");
+        COLUMN_MAPPINGS.put("phone", "phone");
     }
 
     public User() {
     }
 
-    public User(String userName, String password, String firstName, String lastName, String email) {
+    public User(String userName, String password, String firstName, String lastName, String email, String phone) {
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phone = phone;
     }
 
-    public User(String userName, String password, String firstName, String lastName, String email,
+    public User(String userName, String password, String firstName, String lastName, String email, String phone,
                 Collection<Role> roles) {
         this.userName = userName;
         this.password = password;
@@ -72,7 +80,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", userName='" + userName + '\'' + ", password='" + "*********" + '\''
-                + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\''
+                + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\''
                 + ", roles=" + roles + '}';
     }
 }

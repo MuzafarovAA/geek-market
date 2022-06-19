@@ -79,13 +79,6 @@ public class ShopController {
         return "shop-page";
     }
 
-    @GetMapping("/cart/add/{id}")
-    public String addProductToCart(Model model, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        shoppingCartService.addToCart(httpServletRequest.getSession(), id);
-        String referrer = httpServletRequest.getHeader("referer");
-
-        return "redirect:" + referrer;
-    }
 
     private final static String QUEUE_NAME = "orderQueue";
 

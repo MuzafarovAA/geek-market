@@ -1,10 +1,11 @@
 package com.geekbrains.geekmarketwinter.services;
 
+import com.geekbrains.geekmarketwinter.repositories.RoleRepository;
+import com.geekbrains.geekmarketwinter.repositories.UserRepository;
 import com.geekbrains.geekmarketwinter.entities.Role;
 import com.geekbrains.geekmarketwinter.entities.SystemUser;
 import com.geekbrains.geekmarketwinter.entities.User;
-import com.geekbrains.geekmarketwinter.repositories.RoleRepository;
-import com.geekbrains.geekmarketwinter.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +48,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+//    @Transactional
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
     @Transactional
     public boolean save(SystemUser systemUser) {
         User user = new User();
@@ -59,6 +67,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(systemUser.getFirstName());
         user.setLastName(systemUser.getLastName());
         user.setEmail(systemUser.getEmail());
+        user.setPhone(systemUser.getPhone());
 
         user.setRoles(Arrays.asList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
 

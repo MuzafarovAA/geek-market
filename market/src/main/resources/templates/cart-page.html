@@ -34,6 +34,7 @@
                 <th>Цена за ед.</th>
                 <th>Кол-во</th>
                 <th>Сумма</th>
+                <th/>
             </tr>
             </thead>
             <tbody>
@@ -41,8 +42,14 @@
                 <td th:text="${itrStat.index + 1}"/>
                 <td th:text="${cartItem.product.title}"/>
                 <td th:text="${cartItem.itemPrice}"/>
-                <td th:text="${cartItem.quantity}"/>
+                <td>
+                    <span th:text="${cartItem.quantity}"/>
+                    <a th:href="@{'/cart/add/' + ${cartItem.product.id}}" class="btn btn-primary">+</a>
+                </td>
                 <td th:text="${cartItem.totalPrice}"/>
+                <td>
+                    <a th:href="@{'/cart/remove/' + ${cartItem.product.id}}" class="btn btn-primary">Удалить из корзины</a>
+                </td>
             </tr>
             <tr>
                 <td/>
@@ -50,6 +57,9 @@
                 <td/>
                 <td>Итого заказ:</td>
                 <td th:text="${cart.totalCost}"/>
+                <td>
+                    <a th:href="@{'/cart/reset/'}" class="btn btn-primary">Очистить корзину</a>
+                </td>
             </tr>
             </tbody>
         </table>
