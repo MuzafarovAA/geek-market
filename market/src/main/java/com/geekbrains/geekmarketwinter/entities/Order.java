@@ -2,6 +2,7 @@ package com.geekbrains.geekmarketwinter.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import contract.entities.User;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 

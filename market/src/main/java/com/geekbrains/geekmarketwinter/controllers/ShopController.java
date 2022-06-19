@@ -2,7 +2,7 @@ package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entities.DeliveryAddress;
 import com.geekbrains.geekmarketwinter.entities.Order;
-import com.geekbrains.geekmarketwinter.entities.User;
+import contract.entities.User;
 import com.geekbrains.geekmarketwinter.services.*;
 import contract.entities.Product;
 import contract.specifications.ProductSpecs;

@@ -1,10 +1,11 @@
-package com.geekbrains.geekmarketwinter.services;
+package com.geekbrains.users.services;
 
-import com.geekbrains.geekmarketwinter.repositories.RoleRepository;
-import com.geekbrains.geekmarketwinter.repositories.UserRepository;
-import com.geekbrains.geekmarketwinter.entities.Role;
-import com.geekbrains.geekmarketwinter.entities.SystemUser;
-import com.geekbrains.geekmarketwinter.entities.User;
+
+import com.geekbrains.users.repositories.RoleRepository;
+import com.geekbrains.users.repositories.UserRepository;
+import contract.entities.Role;
+import contract.entities.SystemUser;
+import contract.entities.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private BCryptPasswordEncoder passwordEncoder;
+//    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -36,13 +37,13 @@ public class UserServiceImpl implements UserService {
         this.roleRepository = roleRepository;
     }
 
-    @Autowired
-    public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+//    @Autowired
+//    public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     @Override
-    @Transactional
+//    @Transactional
     public User findByUserName(String username) {
         return userRepository.findOneByUserName(username);
     }
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public boolean save(SystemUser systemUser) {
         User user = new User();
 
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setUserName(systemUser.getUserName());
-        user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
+//        user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
         user.setFirstName(systemUser.getFirstName());
         user.setLastName(systemUser.getLastName());
         user.setEmail(systemUser.getEmail());
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findOneByUserName(userName);
         if (user == null) {

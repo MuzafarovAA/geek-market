@@ -1,10 +1,12 @@
-package com.geekbrains.geekmarketwinter.repositories;
+package com.geekbrains.users.repositories;
 
-import com.geekbrains.geekmarketwinter.entities.Role;
+import contract.entities.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long> {
+    @Transactional
     Role findOneByName(String theRoleName);
 }
