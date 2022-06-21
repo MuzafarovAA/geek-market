@@ -1,8 +1,8 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
+import com.geekbrains.geekmarketwinter.services.UserService;
 import contract.entities.SystemUser;
 import contract.entities.User;
-import com.geekbrains.geekmarketwinter.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @GetMapping("/showRegisteredUsers")
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     public String showRegisteredUsers(Model model) {
         List<User> users = userService.findAll();
         model.addAttribute("users", users);

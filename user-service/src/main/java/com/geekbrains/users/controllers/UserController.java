@@ -2,8 +2,8 @@ package com.geekbrains.users.controllers;
 
 import contract.entities.SystemUser;
 import contract.entities.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -17,8 +17,5 @@ public interface UserController {
 
     @GetMapping("/save")
     boolean save(SystemUser systemUser);
-
-    @GetMapping("/loadUserByUsername")
-    UserDetails loadUserByUsername(@RequestParam("username") String username);
 
 }

@@ -2,9 +2,9 @@ package com.geekbrains.geekmarketwinter.services;
 
 import com.geekbrains.geekmarketwinter.entities.Order;
 import com.geekbrains.geekmarketwinter.entities.OrderItem;
-import contract.entities.User;
 import com.geekbrains.geekmarketwinter.repositories.OrderRepository;
 import com.geekbrains.geekmarketwinter.utils.ShoppingCart;
+import contract.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

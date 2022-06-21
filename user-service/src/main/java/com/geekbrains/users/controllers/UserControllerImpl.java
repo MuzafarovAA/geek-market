@@ -4,10 +4,11 @@ import com.geekbrains.users.services.UserService;
 import contract.entities.SystemUser;
 import contract.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class UserControllerImpl implements UserController {
 
     private UserService userService;
@@ -32,8 +33,4 @@ public class UserControllerImpl implements UserController {
         return userService.save(systemUser);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String userName) {
-        return userService.loadUserByUsername(userName);
-    }
 }

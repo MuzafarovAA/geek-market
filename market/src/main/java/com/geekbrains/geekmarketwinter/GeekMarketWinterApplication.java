@@ -1,7 +1,5 @@
 package com.geekbrains.geekmarketwinter;
 
-//import com.geekbrains.geekmarketwinter.utils.MessageReceiver;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
