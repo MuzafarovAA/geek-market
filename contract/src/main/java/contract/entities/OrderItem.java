@@ -1,7 +1,6 @@
-package com.geekbrains.geekmarketwinter.entities;
+package contract.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import contract.entities.Product;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 

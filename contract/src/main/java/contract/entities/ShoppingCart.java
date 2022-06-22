@@ -1,6 +1,6 @@
-package com.geekbrains.geekmarketwinter.utils;
+package contract.entities;
 
-import com.geekbrains.geekmarketwinter.entities.OrderItem;
+import contract.entities.OrderItem;
 import contract.entities.Product;
 import lombok.Data;
 
@@ -32,6 +32,19 @@ public class ShoppingCart {
         recalculate();
     }
 
+    public void remove(Product product) {
+        OrderItem orderItem = findOrderFromProduct(product);
+        if (orderItem == null) {
+            return;
+        }
+        if (orderItem.getQuantity() == 1) {
+            deleteFromCart(product);
+        } else {
+            orderItem.setQuantity(orderItem.getQuantity() - 1);
+        }
+        recalculate();
+    }
+
     public void setQuantity(Product product, Long quantity) {
         OrderItem orderItem = findOrderFromProduct(product);
         if (orderItem == null) {
@@ -41,7 +54,7 @@ public class ShoppingCart {
         recalculate();
     }
 
-    public void remove(Product product) {
+    public void deleteFromCart(Product product) {
         OrderItem orderItem = findOrderFromProduct(product);
         if (orderItem == null) {
             return;

@@ -43,12 +43,13 @@
                 <td th:text="${cartItem.product.title}"/>
                 <td th:text="${cartItem.itemPrice}"/>
                 <td>
+                    <a th:href="@{'/cart/remove/' + ${cartItem.product.id}}" class="btn btn-primary">-</a>
                     <span th:text="${cartItem.quantity}"/>
                     <a th:href="@{'/cart/add/' + ${cartItem.product.id}}" class="btn btn-primary">+</a>
                 </td>
                 <td th:text="${cartItem.totalPrice}"/>
                 <td>
-                    <a th:href="@{'/cart/remove/' + ${cartItem.product.id}}" class="btn btn-primary">Удалить из корзины</a>
+                    <a th:href="@{'/cart/delete/' + ${cartItem.product.id}}" class="btn btn-primary">Удалить из корзины</a>
                 </td>
             </tr>
             <tr>

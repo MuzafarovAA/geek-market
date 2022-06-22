@@ -1,7 +1,8 @@
-package com.geekbrains.geekmarketwinter.services;
+package com.geekbrains.orders.services;
 
-import com.geekbrains.geekmarketwinter.entities.OrderStatus;
-import com.geekbrains.geekmarketwinter.repositories.OrderStatusRepository;
+import com.geekbrains.orders.repositories.OrderStatusRepository;
+import contract.entities.OrderStatus;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

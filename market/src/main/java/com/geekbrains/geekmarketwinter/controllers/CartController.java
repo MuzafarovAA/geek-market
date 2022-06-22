@@ -1,7 +1,7 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.services.ShoppingCartService;
-import com.geekbrains.geekmarketwinter.utils.ShoppingCart;
+import contract.entities.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +41,14 @@ public class CartController {
     @GetMapping("/remove/{id}")
     public String removeProductFromCart(Model model, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         shoppingCartService.removeFromCart(httpServletRequest.getSession(), id);
+        String referrer = httpServletRequest.getHeader("referer");
+
+        return "redirect:" + referrer;
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProductFromCart(Model model, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+        shoppingCartService.deleteFromCart(httpServletRequest.getSession(), id);
         String referrer = httpServletRequest.getHeader("referer");
 
         return "redirect:" + referrer;

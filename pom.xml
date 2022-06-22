@@ -11,6 +11,7 @@
         <module>eureka-service</module>
         <module>market</module>
         <module>user-service</module>
+        <module>order-service</module>
     </modules>
 
     <parent>
