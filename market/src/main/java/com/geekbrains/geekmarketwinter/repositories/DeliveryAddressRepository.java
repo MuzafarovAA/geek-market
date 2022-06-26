@@ -1,6 +1,6 @@
 package com.geekbrains.geekmarketwinter.repositories;
 
-import com.geekbrains.geekmarketwinter.entities.DeliveryAddress;
+import contract.entities.DeliveryAddress;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

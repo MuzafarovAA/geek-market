@@ -1,6 +1,6 @@
 package com.geekbrains.geekmarketwinter.services;
 
-import com.geekbrains.geekmarketwinter.entities.DeliveryAddress;
+import contract.entities.DeliveryAddress;
 import com.geekbrains.geekmarketwinter.repositories.DeliveryAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,5 @@
 package com.geekbrains.geekmarketwinter.config;
 
-import com.geekbrains.geekmarketwinter.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,17 +9,18 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
+    private UserDetailsService userService;
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserDetailsService userService) {
         this.userService = userService;
     }
 
@@ -33,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()

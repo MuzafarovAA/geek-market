@@ -1,15 +1,14 @@
-package com.geekbrains.geekmarketwinter.services;
+package com.geekbrains.orders.controllers;
 
 import contract.entities.Order;
 import contract.entities.ShoppingCart;
-import org.springframework.cloud.openfeign.FeignClient;
+import contract.entities.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "order-service-client", contextId = "order-service")
-public interface OrderService {
-
+@RestController
+public interface OrderController {
     @PostMapping("/makeOrder")
     Order makeOrder(@RequestBody ShoppingCart cart, @RequestParam("username") String user);
 
@@ -24,5 +23,5 @@ public interface OrderService {
 
     @PutMapping("/changeOrderStatus")
     Order changeOrderStatus(@RequestBody Order order, @RequestParam("id") Long statusId);
-
 }
+

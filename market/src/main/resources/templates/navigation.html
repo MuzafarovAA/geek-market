@@ -43,7 +43,7 @@
                 </li>
                 <li sec:authorize="hasRole('ADMIN')" class="nav-item"
                     th:classappend="${activeTab == 'Register' ? 'active' : ''}">
-                    <a class="nav-link" th:href="@{/register/showRegistrationForm}">Добавить пользователя</a>
+                    <a class="nav-link" th:href="@{/users/register/showRegistrationForm}">Добавить пользователя</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
                     <form th:action="@{/logout}" method="POST">

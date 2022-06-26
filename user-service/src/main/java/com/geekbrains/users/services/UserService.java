@@ -1,25 +1,19 @@
-package com.geekbrains.geekmarketwinter.services;
+package com.geekbrains.users.services;
 
-import com.geekbrains.geekmarketwinter.entities.Role;
-import com.geekbrains.geekmarketwinter.entities.SystemUser;
-import com.geekbrains.geekmarketwinter.entities.User;
-import com.geekbrains.geekmarketwinter.repositories.RoleRepository;
-import com.geekbrains.geekmarketwinter.repositories.UserRepository;
+import com.geekbrains.users.repositories.RoleRepository;
+import com.geekbrains.users.repositories.UserRepository;
+import contract.entities.SystemUser;
+import contract.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
@@ -39,13 +33,15 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
     @Transactional
     public User findByUserName(String username) {
         return userRepository.findOneByUserName(username);
     }
 
-    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
     @Transactional
     public boolean save(SystemUser systemUser) {
         User user = new User();
@@ -59,6 +55,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(systemUser.getFirstName());
         user.setLastName(systemUser.getLastName());
         user.setEmail(systemUser.getEmail());
+        user.setPhone(systemUser.getPhone());
 
         user.setRoles(Arrays.asList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
 
@@ -66,18 +63,4 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findOneByUserName(userName);
-        if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
 }

@@ -1,5 +1,6 @@
-package com.geekbrains.geekmarketwinter.entities;
+package contract.entities;
 
+import contract.entities.User;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package com.geekbrains.geekmarketwinter.entities;
+package contract.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

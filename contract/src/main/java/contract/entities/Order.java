@@ -1,7 +1,8 @@
-package com.geekbrains.geekmarketwinter.entities;
+package contract.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -21,9 +22,10 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+//    @JsonBackReference
     private User user;
 
+    @JsonManagedReference
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 

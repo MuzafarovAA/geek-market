@@ -53,7 +53,7 @@
             <td th:text="${product.title}"/>
             <td th:text="${product.price}"/>
             <td>
-                <a th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary" onclick="sendName()">Добавить
+                <a th:href="@{'/cart/add/' + ${product.id}}" class="btn btn-primary" onclick="sendName()">Добавить
                     в корзину</a>
             </td>
         </tr>

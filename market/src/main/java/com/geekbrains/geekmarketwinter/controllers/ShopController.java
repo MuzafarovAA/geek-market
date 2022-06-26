@@ -1,10 +1,10 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
-import com.geekbrains.geekmarketwinter.entities.DeliveryAddress;
-import com.geekbrains.geekmarketwinter.entities.Order;
-import com.geekbrains.geekmarketwinter.entities.User;
+import contract.entities.DeliveryAddress;
+import contract.entities.Order;
 import com.geekbrains.geekmarketwinter.services.*;
 import contract.entities.Product;
+import contract.entities.User;
 import contract.specifications.ProductSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -79,13 +80,6 @@ public class ShopController {
         return "shop-page";
     }
 
-    @GetMapping("/cart/add/{id}")
-    public String addProductToCart(Model model, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        shoppingCartService.addToCart(httpServletRequest.getSession(), id);
-        String referrer = httpServletRequest.getHeader("referer");
-
-        return "redirect:" + referrer;
-    }
 
     private final static String QUEUE_NAME = "orderQueue";
 
@@ -95,7 +89,7 @@ public class ShopController {
             return "redirect:/login";
         }
         User user = userService.findByUserName(principal.getName());
-        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
+        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), principal.getName());
         List<DeliveryAddress> deliveryAddresses = deliveryAddressService.getUserAddresses(user.getId());
         model.addAttribute("order", order);
         model.addAttribute("deliveryAddresses", deliveryAddresses);
@@ -128,14 +122,14 @@ public class ShopController {
             return "redirect:/login";
         }
         User user = userService.findByUserName(principal.getName());
-        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
+        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), principal.getName());
         order.setDeliveryAddress(orderFromFrontend.getDeliveryAddress());
         order.setPhoneNumber(orderFromFrontend.getPhoneNumber());
         order.setDeliveryDate(LocalDateTime.now().plusDays(7));
         order.setDeliveryPrice(0.0);
         order = orderService.saveOrder(order);
         model.addAttribute("order", order);
-        return "order-filler";
+        return "order-result";
     }
 
     @GetMapping("/order/result/{id}")

@@ -1,6 +1,6 @@
-package com.geekbrains.geekmarketwinter.repositories;
+package com.geekbrains.orders.repositories;
 
-import com.geekbrains.geekmarketwinter.entities.OrderStatus;
+import contract.entities.OrderStatus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.geekbrains.geekmarketwinter.entities;
+package contract.entities;
 
 import lombok.Data;
 
@@ -25,6 +25,7 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
+//        return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
+        return name;
     }
 }

@@ -1,6 +1,6 @@
 package com.geekbrains.geekmarketwinter.services;
 
-import com.geekbrains.geekmarketwinter.utils.ShoppingCart;
+import contract.entities.ShoppingCart;
 import contract.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,10 +49,21 @@ public class ShoppingCartService {
         cart.remove(product);
     }
 
+
+    public void deleteFromCart(HttpSession session, Long productId) {
+        Product product = productService.getProductById(productId);
+        deleteFromCart(session, product);
+    }
+
+    public void deleteFromCart(HttpSession session, Product product) {
+        ShoppingCart cart = getCurrentCart(session);
+        cart.deleteFromCart(product);
+    }
 //    public void setProductCount(HttpSession session, Long productId, Long quantity) {
 //        ShoppingCart cart = getCurrentCart(session);
 //        Product product = productService.getProductById(productId);
 //        cart.setQuantity(product, quantity);
+
 //    }
 
     public void setProductCount(HttpSession session, Product product, Long quantity) {
