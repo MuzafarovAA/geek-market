@@ -12,6 +12,7 @@
         <module>market</module>
         <module>user-service</module>
         <module>order-service</module>
+        <module>mail-service</module>
     </modules>
 
     <parent>
