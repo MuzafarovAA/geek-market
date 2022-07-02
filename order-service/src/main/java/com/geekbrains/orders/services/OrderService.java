@@ -20,6 +20,13 @@ public class OrderService {
 
     private OrderStatusService orderStatusService;
 
+    private MailService mailService;
+
+    @Autowired
+    public void setMailService(MailService mailService) {
+        this.mailService = mailService;
+    }
+
     @Autowired
     public void setOrderRepository(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -55,6 +62,7 @@ public class OrderService {
     public Order saveOrder(Order order) {
         Order orderOut = orderRepository.save(order);
         orderOut.setConfirmed(true);
+        mailService.sendEmail(orderOut);
         return orderOut;
     }
 
